@@ -2,8 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#1B3A6B">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lucimar Materiais para Construção | Mongaguá, SP</title>
   <meta name="description" content="Loja de materiais de construção em Mongaguá, SP. Ferramentas, material elétrico, hidráulico, tintas e muito mais. Desde 1998. Fale pelo WhatsApp.">
   <meta name="keywords" content="materiais construção mongaguá, ferragens mongaguá, loja construção litoral sul sp, material construção balneário itaóca">
@@ -13,8 +12,7 @@
   <meta property="og:locale" content="pt_BR">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="assets/storefront.jpeg" fetchpriority="high">
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -23,19 +21,18 @@
   <header class="site-header" id="header">
     <div class="header-inner">
       <a href="#inicio" class="logo" id="logo-placeholder">
-        <img src="assets/logo.jpg" alt="Lucimar — Materiais para Construção" height="48" width="48" fetchpriority="high">
+        <img src="../assets/logo.jpg" alt="Lucimar — Materiais para Construção" height="48">
       </a>
       <nav class="main-nav" id="main-nav">
         <a href="#inicio">Início</a>
         <a href="#produtos">Produtos</a>
-        <a href="#entrega">Entrega</a>
         <a href="#marcas">Marcas</a>
         <a href="#sobre">Sobre</a>
         <a href="#contato">Contato</a>
       </nav>
       <a href="https://wa.me/5513997585780" target="_blank" rel="noopener" class="btn-whatsapp-header">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        <span class="btn-whatsapp-label">Fale pelo WhatsApp</span>
+        Fale pelo WhatsApp
       </a>
       <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -48,13 +45,13 @@
     <div id="scroll-sequence">
       <canvas id="scroll-canvas"></canvas>
 
-      <!-- Loading bar (only shown while frames preload on desktop) -->
+      <!-- Loading bar for frame preloading -->
       <div class="scroll-loading" id="scroll-loading">
         <div class="scroll-loading-bar" id="scroll-loading-bar"></div>
       </div>
 
-      <!-- Text overlays — last one has a wider window so it lingers longer -->
-      <div class="scroll-overlay" data-at="0.0" data-window="0.14">
+      <!-- Text overlays that fade in at scroll checkpoints -->
+      <div class="scroll-overlay" data-at="0.0">
         <h1 class="hero-headline" id="hero-headline">Vamos começar a sua obra?</h1>
         <p class="hero-sub">Materiais de construção, ferramentas e muito mais em Mongaguá, SP.</p>
         <div class="hero-ctas">
@@ -62,9 +59,9 @@
           <a href="https://wa.me/5513997585780" target="_blank" rel="noopener" class="btn btn-green">Falar no WhatsApp</a>
         </div>
       </div>
-      <div class="scroll-overlay" data-at="0.30" data-window="0.12">Materiais de qualidade para cada etapa</div>
-      <div class="scroll-overlay" data-at="0.55" data-window="0.12">Do alicerce ao acabamento</div>
-      <div class="scroll-overlay" data-at="0.85" data-window="0.28">Venha nos visitar ou entre em contato facilmente com o WhatsApp</div>
+      <div class="scroll-overlay" data-at="0.25">Materiais de qualidade para cada etapa</div>
+      <div class="scroll-overlay" data-at="0.5">Do alicerce ao acabamento</div>
+      <div class="scroll-overlay" data-at="0.75">Venha nos visitar ou entre em contato facilmente com o WhatsApp</div>
     </div>
   </section>
 
@@ -102,20 +99,12 @@
           <p>Mangueiras, vassouras, produtos de limpeza</p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ========== DELIVERY SCENE (scroll-driven truck) ========== -->
-  <section class="delivery-scene" id="entrega" aria-label="Entrega em Mongaguá">
-    <div class="delivery-stage">
-      <div class="delivery-road" aria-hidden="true">
-        <div class="delivery-road-line"></div>
-      </div>
-      <div class="delivery-truck" id="delivery-truck" aria-hidden="true">
-        <img src="assets/truck.svg" alt="" width="200" height="110" decoding="async">
-      </div>
-      <h2 class="delivery-text">Entregamos em Mongaguá</h2>
-      <a href="https://wa.me/5513997585780" target="_blank" rel="noopener" class="delivery-cta">Pedir orçamento no WhatsApp</a>
+      <!-- Delivery callout -->
+      <a href="https://wa.me/5513997585780" target="_blank" rel="noopener" class="delivery-callout reveal" aria-label="Fazemos entrega em Mongaguá - falar no WhatsApp">
+        <svg class="delivery-icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h1.05a2.5 2.5 0 0 0 4.9 0h4.1a2.5 2.5 0 0 0 4.9 0H20a1 1 0 0 0 1-1v-3.5a1 1 0 0 0-.293-.707l-3-3A1 1 0 0 0 17 7.5h-1V5a1 1 0 0 0-1-1H3Zm13 5h.586L19 11.414V14h-.55a2.5 2.5 0 0 0-4.9 0H14V9Zm-9 8a1.25 1.25 0 1 1 0-2.5A1.25 1.25 0 0 1 7 17Zm9 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Z"/></svg>
+        <span><strong>Fazemos entrega em Mongaguá.</strong> Fale com a gente no WhatsApp.</span>
+      </a>
     </div>
   </section>
 
@@ -124,21 +113,37 @@
     <div class="container">
       <h2 class="section-title">Marcas que você confia</h2>
       <div class="marquee" aria-label="Marcas disponíveis">
-        <ul class="marquee-track" id="marquee-track">
-          <li class="brand-logo"><img src="assets/brands/tigre.png" alt="Tigre" loading="lazy" decoding="async" width="160" height="64"></li>
-          <li class="brand-logo"><img src="assets/brands/tramontina.webp" alt="Tramontina" loading="lazy" decoding="async" width="160" height="64"></li>
-          <li class="brand-logo"><img src="assets/brands/vonder.png" alt="Vonder" loading="lazy" decoding="async" width="160" height="64"></li>
-          <li class="brand-logo"><img src="assets/brands/bosch.png" alt="Bosch" loading="lazy" decoding="async" width="160" height="64"></li>
-          <li class="brand-logo"><img src="assets/brands/vedacit.png" alt="Vedacit" loading="lazy" decoding="async" width="160" height="64"></li>
-          <li class="brand-logo"><img src="assets/brands/suvinil.png" alt="Suvinil" loading="lazy" decoding="async" width="160" height="64"></li>
-          <li class="brand-logo"><img src="assets/brands/coral.jpg" alt="Coral" loading="lazy" decoding="async" width="160" height="64"></li>
-          <li class="brand-logo"><img src="assets/brands/eucatex.png" alt="Eucatex" loading="lazy" decoding="async" width="160" height="64"></li>
-          <li class="brand-logo"><img src="assets/brands/veneza.webp" alt="Veneza" loading="lazy" decoding="async" width="160" height="64"></li>
-          <li class="brand-logo"><img src="assets/brands/mor.png" alt="Mor" loading="lazy" decoding="async" width="160" height="64"></li>
-          <li class="brand-logo"><img src="assets/brands/formigres.png" alt="Formigrês" loading="lazy" decoding="async" width="160" height="64"></li>
-          <li class="brand-logo"><img src="assets/brands/plastilite.webp" alt="Plastilite" loading="lazy" decoding="async" width="160" height="64"></li>
-          <li class="brand-logo"><img src="assets/brands/astra.png" alt="Astra" loading="lazy" decoding="async" width="160" height="64"></li>
-        </ul>
+        <div class="marquee-track">
+          <div class="brand-logo"><img src="../assets/brands/tigre.svg" alt="Tigre"></div>
+          <div class="brand-logo"><img src="../assets/brands/tramontina.svg" alt="Tramontina"></div>
+          <div class="brand-logo"><img src="../assets/brands/vonder.svg" alt="Vonder"></div>
+          <div class="brand-logo"><img src="../assets/brands/bosch.svg" alt="Bosch"></div>
+          <div class="brand-logo"><img src="../assets/brands/vedacit.svg" alt="Vedacit"></div>
+          <div class="brand-logo"><img src="../assets/brands/suvinil.svg" alt="Suvinil"></div>
+          <div class="brand-logo"><img src="../assets/brands/coral.svg" alt="Coral"></div>
+          <div class="brand-logo"><img src="../assets/brands/eucatex.svg" alt="Eucatex"></div>
+          <div class="brand-logo"><img src="../assets/brands/veneza.svg" alt="Veneza"></div>
+          <div class="brand-logo"><img src="../assets/brands/resiclir.svg" alt="Resiclir"></div>
+          <div class="brand-logo"><img src="../assets/brands/mor.svg" alt="Mor"></div>
+          <div class="brand-logo"><img src="../assets/brands/formigres.svg" alt="Formigrês"></div>
+          <div class="brand-logo"><img src="../assets/brands/plastilite.svg" alt="Plastilite"></div>
+          <div class="brand-logo"><img src="../assets/brands/astra.svg" alt="Astra"></div>
+          <!-- Duplicate for seamless loop -->
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/tigre.svg" alt=""></div>
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/tramontina.svg" alt=""></div>
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/vonder.svg" alt=""></div>
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/bosch.svg" alt=""></div>
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/vedacit.svg" alt=""></div>
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/suvinil.svg" alt=""></div>
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/coral.svg" alt=""></div>
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/eucatex.svg" alt=""></div>
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/veneza.svg" alt=""></div>
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/resiclir.svg" alt=""></div>
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/mor.svg" alt=""></div>
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/formigres.svg" alt=""></div>
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/plastilite.svg" alt=""></div>
+          <div class="brand-logo" aria-hidden="true"><img src="../assets/brands/astra.svg" alt=""></div>
+        </div>
       </div>
     </div>
   </section>
@@ -209,13 +214,12 @@
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <img src="assets/logo.jpg" alt="Lucimar" class="footer-logo-img" height="40" width="40" loading="lazy" decoding="async">
+        <img src="../assets/logo.jpg" alt="Lucimar" class="footer-logo-img" height="40">
         <p class="footer-tagline">Sua obra começa aqui.</p>
       </div>
       <nav class="footer-nav">
         <a href="#inicio">Início</a>
         <a href="#produtos">Produtos</a>
-        <a href="#entrega">Entrega</a>
         <a href="#marcas">Marcas</a>
         <a href="#sobre">Sobre</a>
         <a href="#contato">Contato</a>
@@ -241,6 +245,6 @@
   <div id="chatbot-container"></div>
   <!-- CHATBOT: Reserved for Iteration 2 — AI chatbot with lead capture -> WhatsApp -->
 
-  <script src="js/main.js" defer></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

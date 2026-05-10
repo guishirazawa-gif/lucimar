@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 110" role="img" aria-label="Caminhão de entrega Lucimar">
+  <!-- shadow -->
+  <ellipse cx="100" cy="100" rx="80" ry="4" fill="rgba(0,0,0,0.18)"/>
+  <!-- cargo box -->
+  <rect x="62" y="22" width="118" height="58" rx="3" fill="#1B3A6B" stroke="#0e2349" stroke-width="2"/>
+  <!-- cargo box stripe -->
+  <rect x="62" y="55" width="118" height="6" fill="#C8A45A"/>
+  <!-- cab -->
+  <path d="M4 80 L4 50 L18 50 L30 32 L62 32 L62 80 Z" fill="#F2EDE4" stroke="#0e2349" stroke-width="2"/>
+  <!-- windshield -->
+  <path d="M22 50 L32 38 L58 38 L58 50 Z" fill="#9ec7df"/>
+  <!-- door line -->
+  <line x1="46" y1="50" x2="46" y2="80" stroke="#0e2349" stroke-width="1.5"/>
+  <!-- headlight -->
+  <rect x="4" y="64" width="6" height="6" fill="#FFD66B"/>
+  <!-- bumper -->
+  <rect x="2" y="78" width="60" height="4" fill="#222"/>
+  <!-- wheels -->
+  <g>
+    <circle cx="34" cy="88" r="12" fill="#1a1a1a"/>
+    <circle cx="34" cy="88" r="5" fill="#888"/>
+  </g>
+  <g>
+    <circle cx="140" cy="88" r="12" fill="#1a1a1a"/>
+    <circle cx="140" cy="88" r="5" fill="#888"/>
+  </g>
+  <!-- LUCIMAR label -->
+  <text x="121" y="46" text-anchor="middle" font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="14" fill="#F2EDE4" letter-spacing="1">LUCIMAR</text>
+  <text x="121" y="74" text-anchor="middle" font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="9" fill="#C8A45A" letter-spacing="1.5">MATERIAIS · 1998</text>
+</svg>

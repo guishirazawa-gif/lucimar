@@ -10,7 +10,7 @@
 
 A single-page marketing website for **Lucimar — Materiais para Construção**, a family-owned hardware store in Mongaguá, SP, Brazil, operating since 1998. The store has strong local reputation but zero digital presence.
 
-**Versions:** the live site is V2 at the repo root. The frozen V1 snapshot is under `/v1/` for reference — do not modify it.
+**Versions:** the live site is V3 at the repo root. Frozen snapshots live under `/v1/` and `/v2/` for reference — do not modify them. Each snapshot rewrites its paths to share heavy assets (`../assets/frames/`, `../assets/storefront.jpeg`, etc.) with the live site, but otherwise stands alone.
 
 **The one job of this website:** make a stranger who found the store on Google trust it enough to call or send a WhatsApp message.
 
@@ -28,7 +28,7 @@ Maps:          https://maps.app.goo.gl/mK1UGdGgCQLGMsnU9
 Coordinates:   -24.1195904, -46.6735713
 Founded:       1998
 Hours:         Seg–Sex 08h–17h / Sáb 08h–13h / Dom Fechado
-Delivery:      Yes — Mongaguá (shown as callout in Products section)
+Delivery:      Yes — Mongaguá (shown as a dedicated scroll-driven scene with a truck animation, V3)
 ```
 
 > **Contact policy (V2):** WhatsApp only on the public site. Do not expose a `tel:` link or printed phone number in the contact section.
@@ -53,7 +53,7 @@ These are not locked. When working on any of these, propose options before imple
 |---|---|---|
 | Hero visual | Blueprint grid + scattered tool silhouettes (CSS/SVG only) | Should tools be animated in or static? |
 | Scroll video | Sequence of frames playing as user scrolls — see spec below | Frame source not yet decided |
-| Section order | Header → Hero → Trust bar → Products → Brands → About → Reviews → Contact → Footer | May reorder based on what looks better |
+| Section order (V3) | Header → Hero/scroll-sequence → Products → Delivery scene → Brands → About → Reviews → Contact → Footer | May reorder based on what looks better |
 | Fonts | Playfair Display (headings) + Lato (body) | Not final — open to alternatives that match the retro logo energy |
 | Reviews section | 3 placeholder cards | Will be replaced with real embed after launch |
 | Product cards | 8 categories, grid layout | Layout TBD — could be scroll-triggered reveal |
@@ -133,9 +133,26 @@ The scroll-video sequence anchors the **Hero section** and extends into the **Pr
 - Preload all frames before attaching scroll listener — show a loading progress bar while loading
 - Always throttle canvas draws with `requestAnimationFrame` — never draw on every raw scroll event
 - Compress frames: JPEG quality 70–80, max 1280px wide
-- On mobile: reduce frame count by half or fall back to a CSS animation
 - `will-change: transform` on animated elements
 - Never animate `width`, `height`, `top`, `left` — only `transform` and `opacity`
+
+### Capability gating (V3)
+
+The frame preload is skipped entirely when any of these are true:
+- `(max-width: 768px)` viewport
+- `(pointer: coarse)` (touch devices)
+- `navigator.deviceMemory <= 4`
+- `navigator.connection.saveData`
+- `(prefers-reduced-motion: reduce)`
+
+In that case the canvas falls back to a CSS `.placeholder` (storefront photo) and the hero overlays still play. The DOM is identical — only the JS skips the preload loop.
+
+Other perf measures already in place:
+- `<script defer>` on `js/main.js`
+- `requestIdleCallback` (with a 2s timeout fallback) to defer the frame preload until after first paint
+- DPR-aware canvas, capped at 1.5 on mobile / 2 on desktop
+- `content-visibility: auto; contain-intrinsic-size: 800px;` on offscreen sections (disabled on `<= 768px` to avoid scroll-anchor jumps)
+- `loading="lazy"` + `decoding="async"` on non-hero images; `fetchpriority="high"` on the hero storefront image
 
 ---
 
@@ -206,7 +223,7 @@ CTAs: "Ver Produtos" (cream) · "Falar no WhatsApp" (green)
 ```
 
 ### Trust bar
-> Removed in V2. The delivery message lives inside the Products section as a green callout. The "Desde 1998" beat lives in the About section ("+28 anos no mercado") and the page metadata.
+> Removed in V2. The delivery message has its own scroll scene in V3 (see "Delivery scene" below). The "Desde 1998" beat lives in the About section ("+28 anos no mercado") and the page metadata.
 
 ### Products (#produtos)
 ```
@@ -214,17 +231,30 @@ Title: "O que você encontra aqui"
 7 categories — see Product categories table below
 Cards: white bg, 4px --navy left border, --cream hover
 Stagger animation on scroll enter
-Delivery callout under the grid:
-  - Green (--whatsapp) pill, full-width-ish, links to WhatsApp
-  - Copy: "Fazemos entrega em Mongaguá. Fale com a gente no WhatsApp."
+```
+> The V2 green delivery pill under the grid was removed in V3 — that message now has its own scene.
+
+### Delivery scene (#entrega, V3)
+```
+Sticky scroll scene, ~220vh tall.
+A delivery truck SVG (assets/truck.svg) slides from off-screen left to off-screen right as the user scrolls through the scene.
+Driver: JS reads scroll progress and sets a CSS custom property --tx on the truck; CSS uses translate3d(calc(var(--tx) * 1% - 30%), -50%, 0).
+Range: --tx goes from 0 (truck at -30% left) to 100 (truck at +130% right) across the scene.
+Below the truck: headline "Entregamos em Mongaguá"
+WhatsApp CTA underneath: "Pedir orçamento no WhatsApp"
+Mobile: same scene, with a shorter height and smaller truck. The `truckInView` IntersectionObserver scopes work so updates only fire when the scene is on-screen.
 ```
 
 ### Brands (#marcas)
 ```
 Background: --white (light — logos must read clearly)
-Marquee: Tigre · Tramontina · Vonder · Bosch · Vedacit · Suvinil · Coral · Eucatex · Veneza · Resiclir · Mor · Formigrês · Plastilite · Astra
-Show as actual brand logo images at assets/brands/<slug>.svg — never text pills.
-Infinite horizontal scroll, pause on hover.
+Marquee (13 brands, V3 — Resiclir was dropped):
+  Tigre · Tramontina · Vonder · Bosch · Vedacit · Suvinil · Coral
+  · Eucatex · Veneza · Mor · Formigrês · Plastilite · Astra
+Show as real brand logo images at assets/brands/<slug>.<ext>.
+File extensions vary by source (png, jpg, webp) — keep whatever the brand ships, don't re-encode.
+Infinite horizontal scroll, pause on hover. Track is duplicated in JS (cloneMarquee) so the animation reads as seamless; never hand-duplicate items in HTML.
+Edge fade via CSS mask-image so logos enter/exit softly.
 ```
 
 ### About (#sobre)
@@ -302,15 +332,21 @@ href: https://wa.me/5513997585780
 
 ```
 lucimar/
-├── index.html            # V2 — live site at repo root
+├── index.html            # V3 — live site at repo root
 ├── css/style.css
-├── js/main.js            # scroll engine, animations, menu
+├── js/main.js            # scroll engine, truck scene, animations, menu
 ├── assets/
 │   ├── logo.jpg
 │   ├── storefront.jpeg
-│   ├── brands/           # one SVG wordmark per brand (V2 marquee uses these)
-│   └── frames/           # scroll video frames (V1 + V2 share this folder)
+│   ├── truck.svg         # V3 delivery scene
+│   ├── brands/           # real brand logos (png/jpg/webp); old V2 SVG wordmarks
+│   │                     # kept here so /v2/ keeps working
+│   └── frames/           # scroll video frames (all versions share this folder)
 ├── v1/                   # frozen V1 snapshot — references ../assets/...
+│   ├── index.html
+│   ├── css/style.css
+│   └── js/main.js
+├── v2/                   # frozen V2 snapshot — references ../assets/...
 │   ├── index.html
 │   ├── css/style.css
 │   └── js/main.js
@@ -324,13 +360,14 @@ lucimar/
 
 ```html
 <title>Lucimar Materiais para Construção | Mongaguá, SP</title>
-<meta name="description" content="Loja de materiais de construção em Mongaguá, SP. Ferramentas, material elétrico, hidráulico, tintas e muito mais. Desde 1997. Ligue (13) 3448-7000.">
+<meta name="description" content="Loja de materiais de construção em Mongaguá, SP. Ferramentas, material elétrico, hidráulico, tintas e muito mais. Desde 1998. Fale no WhatsApp (13) 99758-5780.">
 <meta name="keywords" content="materiais construção mongaguá, ferragens mongaguá, loja construção litoral sul sp, material construção balneário itaóca">
 <meta property="og:title" content="Lucimar Materiais para Construção | Mongaguá, SP">
-<meta property="og:description" content="Loja familiar de materiais de construção em Mongaguá desde 1997.">
+<meta property="og:description" content="Loja familiar de materiais de construção em Mongaguá desde 1998.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1B3A6B">
 ```
 
 ---
@@ -359,7 +396,9 @@ lucimar/
 
 | # | Scope | Status |
 |---|---|---|
-| 1 | Static site — all sections, scroll animation engine, mobile-ready | 🔨 In progress |
-| 2 | AI chatbot — FAQ answers + lead capture → WhatsApp notification | ⏳ Next |
-| 3 | Real scroll video frames — replace placeholder with actual sequence | ⏳ Planned |
-| 4 | Launch — GitHub Pages, domain, Google Business Profile update | ⏳ Planned |
+| 1 | V1 — static site, all sections, scroll animation engine, mobile-ready | ✅ Shipped (frozen at `/v1/`) |
+| 2 | V2 — visual polish, real brand logos, founding-year fix, WhatsApp-only contact | ✅ Shipped (frozen at `/v2/`) |
+| 3 | V3 — delivery truck scene, mobile-first perf pass, capability gating | ✅ Live at repo root |
+| 4 | AI chatbot — FAQ answers + lead capture → WhatsApp notification | ⏳ Next |
+| 5 | Real scroll video frames — replace placeholder with actual sequence | ⏳ Planned |
+| 6 | Launch — custom domain, Google Business Profile update | ⏳ Planned |

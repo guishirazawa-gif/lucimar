@@ -1,9 +1,8 @@
 /* ============================
-   LUCIMAR — Materiais para Construção
+   LUCIMAR — Materiais para Construção (V3)
    Single-page marketing website
    ============================ */
 
-/* --- Custom Properties --- */
 :root {
   --navy: #1B3A6B;
   --cream: #F2EDE4;
@@ -17,13 +16,7 @@
 }
 
 /* --- Reset --- */
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
@@ -36,23 +29,33 @@ body {
   background: var(--white);
   line-height: 1.6;
   overflow-x: hidden;
+  text-rendering: optimizeSpeed;
 }
 
-img {
-  max-width: 100%;
-  display: block;
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* offscreen sections rendered lazily for perf */
+.section-products,
+.section-brands,
+.section-about,
+.section-contact,
+.delivery-scene {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* --- Utility --- */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
+/* z-index isolation so the hero overlay can never bleed into later sections */
+.section-products,
+.section-brands,
+.section-about,
+.section-contact,
+.delivery-scene,
+.site-footer {
+  position: relative;
+  z-index: 2;
 }
 
 /* ============================
@@ -73,37 +76,23 @@ a {
   animation: slideDown 0.5s ease-out forwards;
 }
 
-@keyframes slideDown {
-  to { transform: translateY(0); }
-}
+@keyframes slideDown { to { transform: translateY(0); } }
 
 .header-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   height: 64px;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  line-height: 1.2;
-}
+.logo { display: flex; align-items: center; line-height: 1.2; flex-shrink: 0; }
+.logo img { height: 48px; width: auto; object-fit: contain; border-radius: 8px; }
 
-.logo img {
-  height: 48px;
-  width: auto;
-  object-fit: contain;
-}
-
-.main-nav {
-  display: flex;
-  gap: 28px;
-}
-
+.main-nav { display: flex; gap: 24px; }
 .main-nav a {
   color: var(--cream);
   font-size: 0.95rem;
@@ -111,21 +100,15 @@ a {
   position: relative;
   padding-bottom: 2px;
 }
-
 .main-nav a::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
   background: var(--gold);
   transition: width 0.3s ease;
 }
-
-.main-nav a:hover::after {
-  width: 100%;
-}
+.main-nav a:hover::after { width: 100%; }
 
 .btn-whatsapp-header {
   display: inline-flex;
@@ -133,18 +116,15 @@ a {
   gap: 8px;
   background: var(--whatsapp);
   color: var(--white);
-  padding: 10px 20px;
+  padding: 10px 18px;
   border-radius: 8px;
   font-weight: 700;
   font-size: 0.9rem;
   transition: opacity 0.2s;
+  flex-shrink: 0;
 }
+.btn-whatsapp-header:hover { opacity: 0.9; }
 
-.btn-whatsapp-header:hover {
-  opacity: 0.9;
-}
-
-/* Hamburger */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -154,47 +134,25 @@ a {
   cursor: pointer;
   padding: 4px;
 }
-
 .hamburger span {
   display: block;
-  width: 26px;
-  height: 3px;
+  width: 26px; height: 3px;
   background: var(--cream);
   border-radius: 2px;
   transition: transform 0.3s, opacity 0.3s;
 }
-
-.hamburger.active span:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
-}
-
-.hamburger.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
-}
+.hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
 /* ============================
    HERO + SCROLL SEQUENCE
    ============================ */
-#inicio {
-  padding-top: 0; /* glass navbar floats over content */
-}
+#inicio { padding-top: 0; }
 
 #scroll-sequence {
   height: 400vh;
   position: relative;
-}
-
-/* Sections sit on top of any escaping hero stack — z-index isolates them. */
-.section-products,
-.section-brands,
-.section-about,
-.section-contact {
-  position: relative;
-  z-index: 2;
 }
 
 #scroll-canvas {
@@ -207,19 +165,15 @@ a {
   will-change: transform;
 }
 
-/* Store front photo as hero background (until real frames exist) */
 #scroll-canvas.placeholder {
   background: url('../assets/storefront.jpeg') center center / cover no-repeat;
 }
 
-/* Subtle gradient on the very first viewport so cream text stays readable.
-   Absolutely positioned — strictly bounded to the hero, never bleeds into later sections. */
+/* Subtle gradient on the first viewport — bounded, never bleeds */
 #scroll-sequence::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 100vh;
   background: linear-gradient(
     to bottom,
@@ -234,14 +188,11 @@ a {
 /* Loading bar */
 .scroll-loading {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 3px;
   z-index: 1001;
   display: none;
 }
-
 .scroll-loading-bar {
   height: 100%;
   background: var(--gold);
@@ -252,8 +203,7 @@ a {
 /* Scroll overlays */
 .scroll-overlay {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 0; right: 0;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -262,7 +212,7 @@ a {
   text-align: center;
   color: var(--cream);
   font-family: var(--font-heading);
-  font-size: 2rem;
+  font-size: clamp(1.4rem, 4vw, 2rem);
   font-weight: 600;
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -270,17 +220,14 @@ a {
   padding: 0 24px;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.5);
 }
+.scroll-overlay.active { opacity: 1; pointer-events: auto; }
 
-.scroll-overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Position overlays at their data-at percentage of scroll-sequence */
-.scroll-overlay[data-at="0.0"]  { top: 0;   height: 100vh; }
-.scroll-overlay[data-at="0.25"] { top: 100vh; height: 100vh; }
-.scroll-overlay[data-at="0.5"]  { top: 200vh; height: 100vh; }
-.scroll-overlay[data-at="0.75"] { top: 300vh; height: 100vh; }
+/* Overlay positions match data-at × scroll-sequence height (400vh).
+   data-at 0.85 ≈ 340vh, so we cover from ~270vh down to give it room to linger. */
+.scroll-overlay[data-at="0.0"]  { top: 0;     height: 100vh; }
+.scroll-overlay[data-at="0.30"] { top: 100vh; height: 100vh; }
+.scroll-overlay[data-at="0.55"] { top: 200vh; height: 100vh; }
+.scroll-overlay[data-at="0.85"] { top: 270vh; height: 130vh; }
 
 .hero-headline {
   font-family: var(--font-heading);
@@ -297,13 +244,7 @@ a {
   transform: translateY(10px);
   animation: wordFade 0.4s ease-out forwards;
 }
-
-@keyframes wordFade {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+@keyframes wordFade { to { opacity: 1; transform: translateY(0); } }
 
 .hero-sub {
   font-family: var(--font-body);
@@ -314,12 +255,7 @@ a {
   opacity: 0.9;
 }
 
-.hero-ctas {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+.hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
 
 /* ============================
    BUTTONS
@@ -336,63 +272,12 @@ a {
   cursor: pointer;
   border: none;
 }
-
-.btn:active {
-  transform: scale(0.97);
-}
-
-.btn-cream {
-  background: var(--cream);
-  color: var(--navy);
-}
-
-.btn-cream:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-}
-
-.btn-green {
-  background: var(--whatsapp);
-  color: var(--white);
-}
-
-.btn-green:hover {
-  box-shadow: 0 4px 16px rgba(37,211,102,0.3);
-}
-
-.btn-large {
-  padding: 18px 36px;
-  font-size: 1.1rem;
-}
-
-/* ============================
-   TRUST BAR
-   ============================ */
-.trust-bar {
-  background: var(--gold);
-  color: var(--navy);
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 32px;
-  padding: 24px;
-}
-
-.trust-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 0.95rem;
-}
-
-.trust-icon {
-  font-size: 1.3rem;
-}
-
-.trust-item a {
-  font-weight: 700;
-  text-decoration: underline;
-}
+.btn:active { transform: scale(0.97); }
+.btn-cream { background: var(--cream); color: var(--navy); }
+.btn-cream:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+.btn-green { background: var(--whatsapp); color: var(--white); }
+.btn-green:hover { box-shadow: 0 4px 16px rgba(37,211,102,0.3); }
+.btn-large { padding: 18px 36px; font-size: 1.1rem; }
 
 /* ============================
    PRODUCTS
@@ -400,38 +285,6 @@ a {
 .section-products {
   background: var(--white);
   padding: 80px 0;
-}
-
-/* Delivery callout under the products grid */
-.delivery-callout {
-  margin: 48px auto 0;
-  max-width: 760px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 20px 28px;
-  background: var(--whatsapp);
-  color: var(--white);
-  border-radius: 14px;
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.18);
-  text-align: left;
-  font-size: 1.05rem;
-  line-height: 1.4;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.delivery-callout:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(37, 211, 102, 0.28);
-}
-
-.delivery-callout .delivery-icon {
-  flex-shrink: 0;
-  color: var(--white);
-}
-
-.delivery-callout strong {
-  font-weight: 800;
 }
 
 .section-title {
@@ -443,40 +296,111 @@ a {
   margin-bottom: 48px;
 }
 
-.section-title--light {
-  color: var(--cream);
-}
-
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px;
+  gap: 20px;
 }
 
 .product-card {
   background: var(--white);
   border-left: 4px solid var(--navy);
-  padding: 28px 24px;
+  padding: 24px 22px;
   border-radius: 8px;
   transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
 }
-
 .product-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
   background: var(--cream);
 }
-
 .product-card h3 {
   font-family: var(--font-heading);
   font-size: 1.15rem;
   color: var(--navy);
   margin-bottom: 8px;
 }
+.product-card p { font-size: 0.9rem; color: #666; }
 
-.product-card p {
-  font-size: 0.9rem;
-  color: #666;
+/* ============================
+   DELIVERY SCENE (scroll-driven truck)
+   ============================ */
+.delivery-scene {
+  background: linear-gradient(180deg, #f8f4ec 0%, var(--cream) 100%);
+  height: 220vh;
+  position: relative;
+  contain: layout paint;
+}
+
+.delivery-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 16px;
+}
+
+.delivery-road {
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 2px;
+  background: rgba(27, 58, 107, 0.18);
+  transform: translateY(64px);
+}
+.delivery-road-line {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(27, 58, 107, 0.35) 0 24px,
+    transparent 24px 48px
+  );
+  height: 2px;
+}
+
+.delivery-truck {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: clamp(140px, 22vw, 240px);
+  height: auto;
+  /* translateX driven from JS via --tx (0 → 100). translateY centers on the road. */
+  transform: translate3d(calc(var(--tx, 0) * 1% - 30%), -50%, 0);
+  will-change: transform;
+}
+.delivery-truck img { width: 100%; height: auto; display: block; }
+
+.delivery-text {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 6vw, 3.6rem);
+  font-weight: 800;
+  color: var(--navy);
+  text-align: center;
+  margin-top: 140px;
+  letter-spacing: -0.5px;
+}
+
+.delivery-cta {
+  margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--whatsapp);
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+.delivery-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37,211,102,0.25);
 }
 
 /* ============================
@@ -497,19 +421,18 @@ a {
 
 .marquee-track {
   display: flex;
-  gap: 40px;
+  gap: 48px;
   width: max-content;
   align-items: center;
-  animation: marquee 45s linear infinite;
+  list-style: none;
+  animation: marquee 50s linear infinite;
+  will-change: transform;
 }
-
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
+.marquee:hover .marquee-track { animation-play-state: paused; }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 
 .brand-logo {
@@ -517,22 +440,16 @@ a {
   align-items: center;
   justify-content: center;
   height: 64px;
-  padding: 0 12px;
+  padding: 0 6px;
   flex-shrink: 0;
-  filter: grayscale(0);
-  opacity: 0.95;
+  opacity: 0.92;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
-
-.brand-logo:hover {
-  opacity: 1;
-  transform: scale(1.04);
-}
-
+.brand-logo:hover { opacity: 1; transform: scale(1.05); }
 .brand-logo img {
   height: 100%;
   width: auto;
-  max-width: 160px;
+  max-width: 180px;
   object-fit: contain;
   display: block;
 }
@@ -544,38 +461,22 @@ a {
   background: var(--cream);
   padding: 80px 0;
 }
-
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 48px;
   align-items: center;
 }
-
-.about-text .section-title {
-  text-align: left;
-}
-
-.about-text p {
-  margin-bottom: 16px;
-  font-size: 1.05rem;
-  line-height: 1.8;
-}
-
-.about-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
+.about-text .section-title { text-align: left; }
+.about-text p { margin-bottom: 16px; font-size: 1.05rem; line-height: 1.8; }
+.about-stats { display: flex; flex-direction: column; gap: 16px; }
 .stat-card {
   background: var(--navy);
   color: var(--cream);
-  padding: 24px 32px;
+  padding: 22px 28px;
   border-radius: 12px;
   text-align: center;
 }
-
 .stat-number {
   display: block;
   font-family: var(--font-heading);
@@ -583,11 +484,7 @@ a {
   font-weight: 700;
   margin-bottom: 4px;
 }
-
-.stat-label {
-  font-size: 0.9rem;
-  opacity: 0.85;
-}
+.stat-label { font-size: 0.9rem; opacity: 0.85; }
 
 /* ============================
    CONTACT
@@ -596,59 +493,21 @@ a {
   background: var(--cream);
   padding: 80px 0;
 }
-
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 48px;
   align-items: start;
 }
-
-.contact-info .section-title {
-  text-align: left;
-}
-
-.contact-item {
-  margin-bottom: 16px;
-  font-size: 1rem;
-}
-
-.contact-item a {
-  color: var(--navy);
-  font-weight: 700;
-  text-decoration: underline;
-}
-
-.hours-table {
-  width: 100%;
-  max-width: 280px;
-  margin: 20px 0;
-  border-collapse: collapse;
-}
-
-.hours-table caption {
-  text-align: left;
-  margin-bottom: 8px;
-}
-
-.hours-table td {
-  padding: 6px 0;
-  font-size: 0.95rem;
-}
-
-.hours-table td:first-child {
-  padding-right: 24px;
-  font-weight: 700;
-}
-
-.contact-cta {
-  margin-top: 24px;
-}
-
-.contact-map iframe {
-  width: 100%;
-  border-radius: 12px;
-}
+.contact-info .section-title { text-align: left; }
+.contact-item { margin-bottom: 16px; font-size: 1rem; }
+.contact-item a { color: var(--navy); font-weight: 700; text-decoration: underline; }
+.hours-table { width: 100%; max-width: 280px; margin: 20px 0; border-collapse: collapse; }
+.hours-table caption { text-align: left; margin-bottom: 8px; }
+.hours-table td { padding: 6px 0; font-size: 0.95rem; }
+.hours-table td:first-child { padding-right: 24px; font-weight: 700; }
+.contact-cta { margin-top: 24px; }
+.contact-map iframe { width: 100%; border-radius: 12px; }
 
 /* ============================
    FOOTER
@@ -658,48 +517,18 @@ a {
   color: var(--cream);
   padding: 60px 0 0;
 }
-
 .footer-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 40px;
   padding-bottom: 40px;
 }
-
-.footer-logo-img {
-  height: 40px;
-  width: auto;
-  object-fit: contain;
-  margin-bottom: 8px;
-}
-
-.footer-tagline {
-  margin-top: 8px;
-  opacity: 0.7;
-  font-style: italic;
-}
-
-.footer-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.footer-nav a {
-  opacity: 0.8;
-  transition: opacity 0.2s;
-}
-
-.footer-nav a:hover {
-  opacity: 1;
-}
-
-.footer-hours p {
-  margin-top: 4px;
-  opacity: 0.8;
-  font-size: 0.9rem;
-}
-
+.footer-logo-img { height: 40px; width: auto; object-fit: contain; margin-bottom: 8px; border-radius: 6px; }
+.footer-tagline { margin-top: 8px; opacity: 0.7; font-style: italic; }
+.footer-nav { display: flex; flex-direction: column; gap: 12px; }
+.footer-nav a { opacity: 0.8; transition: opacity 0.2s; }
+.footer-nav a:hover { opacity: 1; }
+.footer-hours p { margin-top: 4px; opacity: 0.8; font-size: 0.9rem; }
 .footer-bottom {
   border-top: 1px solid rgba(242, 237, 228, 0.15);
   padding: 20px 24px;
@@ -713,11 +542,11 @@ a {
    ============================ */
 .whatsapp-float {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: 20px;
+  right: 20px;
   z-index: 9999;
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: var(--whatsapp);
   display: flex;
@@ -726,25 +555,20 @@ a {
   box-shadow: 0 4px 16px rgba(37,211,102,0.4);
   transition: transform 0.2s;
 }
-
-.whatsapp-float:hover {
-  transform: scale(1.08);
-}
-
+.whatsapp-float:hover { transform: scale(1.08); }
 .whatsapp-float::before {
   content: '';
   position: absolute;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   border-radius: 50%;
   background: var(--whatsapp);
   opacity: 0.4;
   animation: whatsappPulse 2s ease-in-out infinite;
+  z-index: -1;
 }
-
 @keyframes whatsappPulse {
-  0% { transform: scale(1); opacity: 0.4; }
-  70% { transform: scale(1.35); opacity: 0; }
+  0%   { transform: scale(1);    opacity: 0.4; }
+  70%  { transform: scale(1.35); opacity: 0; }
   100% { transform: scale(1.35); opacity: 0; }
 }
 
@@ -756,73 +580,49 @@ a {
   transform: translateY(30px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Stagger for child cards */
+.reveal.visible { opacity: 1; transform: translateY(0); }
 .reveal-stagger {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
-
-.reveal-stagger.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal-stagger.visible { opacity: 1; transform: translateY(0); }
 
 /* ============================
    REDUCED MOTION
    ============================ */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-
-  .reveal,
-  .reveal-stagger {
-    opacity: 1;
-    transform: none;
-  }
-
-  .site-header {
-    transform: none;
-    animation: none;
-  }
-
-  .hero-headline .word {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
-
-  .marquee-track {
-    animation: none;
-  }
-
-  #scroll-canvas.placeholder {
-    animation: none;
-  }
+  .reveal, .reveal-stagger { opacity: 1; transform: none; }
+  .site-header { transform: none; animation: none; }
+  .hero-headline .word { opacity: 1; transform: none; animation: none; }
+  .marquee-track { animation: none; }
+  .delivery-truck { transform: translate3d(35%, -50%, 0) !important; }
 }
 
 /* ============================
    RESPONSIVE
    ============================ */
+@media (max-width: 900px) {
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
 @media (max-width: 768px) {
+  .site-header { top: 8px; left: 8px; right: 8px; border-radius: 14px; }
+  .header-inner { height: 56px; padding: 0 14px; gap: 10px; }
+  .logo img { height: 40px; }
+
   .main-nav {
     display: none;
     position: absolute;
     top: calc(100% + 8px);
-    left: 0;
-    right: 0;
-    background: rgba(27, 58, 107, 0.75);
+    left: 0; right: 0;
+    background: rgba(27, 58, 107, 0.92);
     backdrop-filter: blur(16px) saturate(1.4);
     -webkit-backdrop-filter: blur(16px) saturate(1.4);
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -831,71 +631,43 @@ a {
     padding: 16px 24px 24px;
     gap: 16px;
   }
+  .main-nav.open { display: flex; }
+  .btn-whatsapp-header { padding: 8px 14px; font-size: 0.85rem; }
+  .btn-whatsapp-label { display: none; } /* icon-only on small screens */
+  .hamburger { display: flex; }
 
-  .main-nav.open {
-    display: flex;
-  }
+  .section-products, .section-brands, .section-about, .section-contact { padding: 60px 0; }
+  .section-title { margin-bottom: 32px; }
 
-  .btn-whatsapp-header {
-    display: none;
-  }
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; padding-bottom: 28px; }
+  .hero-ctas { flex-direction: column; align-items: center; width: 100%; }
+  .hero-ctas .btn { width: 80%; max-width: 320px; justify-content: center; }
 
-  .hamburger {
-    display: flex;
-  }
+  .delivery-scene { height: 180vh; }
+  .delivery-text { margin-top: 110px; }
+  .delivery-cta { padding: 11px 20px; font-size: 0.9rem; }
 
-  .trust-bar {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    text-align: center;
-  }
+  .marquee-track { gap: 32px; }
+  .brand-logo { height: 48px; }
+  .brand-logo img { max-width: 140px; }
 
-  .trust-item {
-    flex-direction: column;
-    gap: 4px;
-  }
+  .whatsapp-float { width: 52px; height: 52px; bottom: 16px; right: 16px; }
 
-  .about-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .hero-ctas {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .delivery-callout {
-    margin: 36px 16px 0;
-    padding: 18px 20px;
-    font-size: 0.98rem;
-    border-radius: 12px;
-  }
-
-  .brand-logo {
-    height: 48px;
-  }
-
-  .marquee-track {
-    gap: 28px;
+  /* Disable content-visibility on mobile — interferes with anchor scroll positioning */
+  .section-products, .section-brands, .section-about, .section-contact, .delivery-scene {
+    content-visibility: visible;
   }
 }
 
 @media (max-width: 480px) {
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .reviews-grid {
-    grid-template-columns: 1fr;
-  }
+  .container { padding: 0 16px; }
+  .products-grid { grid-template-columns: 1fr; }
+  .product-card { padding: 20px 18px; }
+  .about-text p { font-size: 1rem; line-height: 1.7; }
+  .stat-card { padding: 18px 22px; }
+  .stat-number { font-size: 1.4rem; }
+  .delivery-text { margin-top: 96px; }
+  .marquee-track { gap: 24px; }
+  .brand-logo { height: 40px; }
+  .brand-logo img { max-width: 120px; }
 }

@@ -8,7 +8,9 @@
 
 ## What this project is
 
-A single-page marketing website for **Lucimar — Materiais para Construção**, a family-owned hardware store in Mongaguá, SP, Brazil, operating since 1997. The store has strong local reputation but zero digital presence.
+A single-page marketing website for **Lucimar — Materiais para Construção**, a family-owned hardware store in Mongaguá, SP, Brazil, operating since 1998. The store has strong local reputation but zero digital presence.
+
+**Versions:** the live site is V2 at the repo root. The frozen V1 snapshot is under `/v1/` for reference — do not modify it.
 
 **The one job of this website:** make a stranger who found the store on Google trust it enough to call or send a WhatsApp message.
 
@@ -21,14 +23,15 @@ A single-page marketing website for **Lucimar — Materiais para Construção**,
 ```
 Store name:    Lucimar — Materiais para Construção
 Address:       Av. Monteiro Lobato, 7944 - Balneário Itaóca, Mongaguá - SP, CEP 11730-000
-Phone:         (13) 3448-7000
-WhatsApp:      https://wa.me/551334487000
+WhatsApp:      https://wa.me/5513997585780  (display: (13) 99758-5780)
 Maps:          https://maps.app.goo.gl/mK1UGdGgCQLGMsnU9
 Coordinates:   -24.1195904, -46.6735713
-Founded:       1997
+Founded:       1998
 Hours:         Seg–Sex 08h–17h / Sáb 08h–13h / Dom Fechado
-Delivery:      Yes — Mongaguá e região
+Delivery:      Yes — Mongaguá (shown as callout in Products section)
 ```
+
+> **Contact policy (V2):** WhatsApp only on the public site. Do not expose a `tel:` link or printed phone number in the contact section.
 
 ```css
 /* Brand colours — never invent alternatives */
@@ -143,7 +146,7 @@ Beyond the scroll video, every section should feel alive. Follow this hierarchy:
 ### On page load
 - Header slides down from top (0.4s ease-out)
 - Hero headline: words appear staggered left-to-right (0.05s delay between words)
-- Trust bar items count up from 0 (e.g. "27 anos" counts up on first view)
+- About stats count up from 0 on first view (e.g. "+28 anos")
 
 ### On scroll enter (Intersection Observer — threshold 0.15)
 Every section fades in + slides up 30px when it enters the viewport:
@@ -203,34 +206,34 @@ CTAs: "Ver Produtos" (cream) · "Falar no WhatsApp" (green)
 ```
 
 ### Trust bar
-```
-Background: --gold. Text: --navy.
-4 items: 🏗️ Desde 1997 · 📍 Em Mongaguá, SP · 🚚 Entrega em Mongaguá e região · 💬 WhatsApp
-Desktop: horizontal row. Mobile: 2×2 grid.
-```
+> Removed in V2. The delivery message lives inside the Products section as a green callout. The "Desde 1998" beat lives in the About section ("+28 anos no mercado") and the page metadata.
 
 ### Products (#produtos)
 ```
 Title: "O que você encontra aqui"
-8 categories — see Product categories table below
+7 categories — see Product categories table below
 Cards: white bg, 4px --navy left border, --cream hover
 Stagger animation on scroll enter
+Delivery callout under the grid:
+  - Green (--whatsapp) pill, full-width-ish, links to WhatsApp
+  - Copy: "Fazemos entrega em Mongaguá. Fale com a gente no WhatsApp."
 ```
 
 ### Brands (#marcas)
 ```
-Background: --navy
-Marquee: Tigre · Tramontina · Vonder · Bosch · Vedacit · Quartzolit · Suvinil · Coral · Sika · Schneider Electric · 3M · Fame
-Pill badges: --cream bg, --navy text, infinite horizontal scroll, pause on hover
+Background: --white (light — logos must read clearly)
+Marquee: Tigre · Tramontina · Vonder · Bosch · Vedacit · Suvinil · Coral · Eucatex · Veneza · Resiclir · Mor · Formigrês · Plastilite · Astra
+Show as actual brand logo images at assets/brands/<slug>.svg — never text pills.
+Infinite horizontal scroll, pause on hover.
 ```
 
 ### About (#sobre)
 ```
 Background: --cream
 Title: "Uma história de confiança em Mongaguá"
-P1: "Desde 1997, a Lucimar Materiais para Construção é referência em Mongaguá para quem vai construir, reformar ou fazer manutenção. Somos uma empresa familiar, com atendimento próximo e personalizado — conhecemos nossos clientes pelo nome."
+P1: "Desde 1998, a Lucimar Materiais para Construção é referência em Mongaguá para quem vai construir, reformar ou fazer manutenção. Somos uma empresa familiar, com atendimento próximo e personalizado — conhecemos nossos clientes pelo nome."
 P2: "Nossa loja no Balneário Itaóca reúne tudo o que você precisa, da fundação ao acabamento, com marcas de qualidade e preços justos. Venha nos visitar ou fale conosco pelo WhatsApp."
-Right: navy stats card — "+27 anos no mercado" · "Empresa familiar" · "Amplo estoque"
+Right: navy stats card — "+28 anos no mercado" · "Empresa familiar" · "Amplo estoque"
 Stats: count-up animation when section enters view
 ```
 
@@ -246,7 +249,8 @@ CTA → Google Maps link
 ### Contact (#contato)
 ```
 Background: --cream. Two columns.
-Left: phone (tel:) · WhatsApp (wa.me) · address · hours table · large green CTA button
+Left: WhatsApp (wa.me) · address · hours table · large green CTA button
+  (No telephone line — WhatsApp only.)
 Right: Google Maps iframe
   src: https://maps.google.com/maps?q=-24.1195904,-46.6735713&z=16&output=embed
   height: 400px, border-radius: 12px
@@ -256,7 +260,7 @@ Right: Google Maps iframe
 ```
 Background: --navy. Text: --cream.
 3 columns: logo+tagline · nav links · hours
-Bottom: "© 2025 Lucimar França Comércio de Materiais para Construção Ltda. Todos os direitos reservados. · Mongaguá, SP"
+Bottom: "© 2026 Lucimar França Comércio de Materiais para Construção Ltda. Todos os direitos reservados. · Mongaguá, SP"
 ```
 
 ### Floating WhatsApp button
@@ -266,7 +270,7 @@ Fixed. bottom: 24px, right: 24px. z-index: 9999.
 White WhatsApp SVG icon (30px).
 Pulse ring animation (CSS, 2s loop).
 Tooltip: "Fale conosco no WhatsApp"
-href: https://wa.me/551334487000
+href: https://wa.me/5513997585780
 ```
 
 ### Chatbot placeholder
@@ -288,25 +292,28 @@ href: https://wa.me/551334487000
 | 4 | Tintas e Revestimentos | tintas, vernizes, massas, solventes |
 | 5 | Ferragens | parafusos, dobradiças, fechaduras, pregos |
 | 6 | Cimento e Argamassa | cimentos, argamassas, rejuntes |
-| 7 | Madeiras e Telhas | ripas, caibros, telhas cerâmicas |
-| 8 | Jardinagem e Limpeza | mangueiras, vassouras, produtos de limpeza |
+| 7 | Jardinagem e Limpeza | mangueiras, vassouras, produtos de limpeza |
+
+> "Madeiras e Telhas" was dropped in V2.
 
 ---
 
 ## File structure
 
 ```
-lucimar-site/
-├── index.html
-├── css/
-│   └── style.css
-├── js/
-│   └── main.js           # scroll engine, animations, menu
+lucimar/
+├── index.html            # V2 — live site at repo root
+├── css/style.css
+├── js/main.js            # scroll engine, animations, menu
 ├── assets/
-│   ├── logo.png          # placeholder — drop real file here
-│   └── frames/           # scroll video frames go here
-│       ├── frame-0001.jpg
-│       └── ...
+│   ├── logo.jpg
+│   ├── storefront.jpeg
+│   ├── brands/           # one SVG wordmark per brand (V2 marquee uses these)
+│   └── frames/           # scroll video frames (V1 + V2 share this folder)
+├── v1/                   # frozen V1 snapshot — references ../assets/...
+│   ├── index.html
+│   ├── css/style.css
+│   └── js/main.js
 ├── CLAUDE.md             # this file
 └── README.md
 ```

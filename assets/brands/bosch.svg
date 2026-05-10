@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" role="img" aria-label="Bosch">
+  <circle cx="40" cy="40" r="22" fill="none" stroke="#EA0016" stroke-width="4"/>
+  <circle cx="40" cy="40" r="6" fill="#EA0016"/>
+  <text x="135" y="52" text-anchor="middle" font-family="Manrope, 'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="32" fill="#1B3A6B">BOSCH</text>
+</svg>

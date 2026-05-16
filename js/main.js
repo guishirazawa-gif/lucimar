@@ -13,9 +13,11 @@
   var lowMemory = navigator.deviceMemory && navigator.deviceMemory <= 4;
   var saveData = navigator.connection && navigator.connection.saveData;
 
-  // Skip the heavy 192-frame preload on phones, low-memory devices, or Save-Data mode.
-  // The CSS placeholder (storefront photo) takes over.
-  var skipFrames = isMobile || coarsePointer || lowMemory || saveData || reduceMotion;
+  // Only fall back to the static placeholder when motion is unwanted or
+  // the user has opted into data savings. Phones and touch devices play
+  // a subsampled version of the sequence instead (see frameStride below).
+  var skipFrames = saveData || reduceMotion;
+  var lite = isMobile || coarsePointer || lowMemory;
 
   // ---- DOM refs ----
   var hamburger = document.getElementById('hamburger');
@@ -28,7 +30,14 @@
   var heroHeadline = document.getElementById('hero-headline');
 
   // ---- Config ----
-  var frameCount = 192;
+  var TOTAL_FRAMES = 192;
+  // Mobile + low-memory devices: every 6th frame (~32 images, ~3MB) keeps
+  // memory under control on iOS Safari; desktop loads all 192.
+  var frameStride = lite ? 6 : 1;
+  var sampledFrames = [];
+  for (var s = 1; s <= TOTAL_FRAMES; s += frameStride) sampledFrames.push(s);
+  if (sampledFrames[sampledFrames.length - 1] !== TOTAL_FRAMES) sampledFrames.push(TOTAL_FRAMES);
+  var frameCount = sampledFrames.length;
   function framePath(i) { return 'assets/frames/frame-' + String(i).padStart(4, '0') + '.jpg'; }
 
   // ---- Mobile menu ----
@@ -80,10 +89,10 @@
 
       var loaded = 0;
       images = new Array(frameCount);
-      for (var i = 1; i <= frameCount; i++) {
+      for (var i = 0; i < frameCount; i++) {
         var img = new Image();
         img.decoding = 'async';
-        img.src = framePath(i);
+        img.src = framePath(sampledFrames[i]);
         img.onload = img.onerror = (function () {
           return function () {
             loaded++;
@@ -95,10 +104,10 @@
             }
           };
         })();
-        images[i - 1] = img;
+        images[i] = img;
       }
     };
-    probe.src = framePath(1);
+    probe.src = framePath(sampledFrames[0]);
   }
 
   function drawFrame(index) {

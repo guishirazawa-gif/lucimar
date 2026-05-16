@@ -55,52 +55,101 @@
 
       <!-- Text overlays — last one has a wider window so it lingers longer -->
       <div class="scroll-overlay" data-at="0.0" data-window="0.14">
-        <h1 class="hero-headline" id="hero-headline">Vamos começar a sua obra?</h1>
-        <p class="hero-sub">Materiais de construção, ferramentas e muito mais em Mongaguá, SP.</p>
-        <div class="hero-ctas">
-          <a href="#produtos" class="btn btn-cream">Ver Produtos</a>
-          <a href="https://wa.me/5513997585780" target="_blank" rel="noopener" class="btn btn-green">Falar no WhatsApp</a>
+        <div class="overlay-glass">
+          <h1 class="hero-headline" id="hero-headline">Vamos começar a sua obra?</h1>
+          <p class="hero-sub">Materiais de construção, ferramentas e muito mais em Mongaguá, SP.</p>
         </div>
       </div>
-      <div class="scroll-overlay" data-at="0.30" data-window="0.12">Materiais de qualidade para cada etapa</div>
-      <div class="scroll-overlay" data-at="0.55" data-window="0.12">Do alicerce ao acabamento</div>
-      <div class="scroll-overlay" data-at="0.85" data-window="0.28">Venha nos visitar ou entre em contato facilmente com o WhatsApp</div>
+      <div class="scroll-overlay" data-at="0.30" data-window="0.12"><span class="overlay-glass-text">Materiais de qualidade para cada etapa</span></div>
+      <div class="scroll-overlay" data-at="0.55" data-window="0.12"><span class="overlay-glass-text">Do alicerce ao acabamento</span></div>
+      <div class="scroll-overlay" data-at="0.85" data-window="0.28"><span class="overlay-glass-text">Venha nos visitar ou entre em contato facilmente com o WhatsApp</span></div>
     </div>
   </section>
 
   <!-- ========== PRODUCTS ========== -->
   <section class="section-products reveal" id="produtos">
     <div class="container">
-      <h2 class="section-title">O que você encontra aqui</h2>
+      <p class="section-eyebrow">O QUE VOCÊ ENCONTRA AQUI</p>
+      <h2 class="section-title">Tudo para sua obra, <span class="accent">do começo ao fim.</span></h2>
       <div class="products-grid">
-        <div class="product-card reveal-stagger">
-          <h3>Ferramentas</h3>
-          <p>Manuais e elétricas</p>
-        </div>
-        <div class="product-card reveal-stagger">
-          <h3>Material Elétrico</h3>
-          <p>Fios, disjuntores, tomadas, iluminação</p>
-        </div>
-        <div class="product-card reveal-stagger">
-          <h3>Material Hidráulico</h3>
-          <p>Tubos, conexões, registros, caixas d'água</p>
-        </div>
-        <div class="product-card reveal-stagger">
-          <h3>Tintas e Revestimentos</h3>
-          <p>Tintas, vernizes, massas, solventes</p>
-        </div>
-        <div class="product-card reveal-stagger">
-          <h3>Ferragens</h3>
-          <p>Parafusos, dobradiças, fechaduras, pregos</p>
-        </div>
-        <div class="product-card reveal-stagger">
-          <h3>Cimento e Argamassa</h3>
-          <p>Cimentos, argamassas, rejuntes</p>
-        </div>
-        <div class="product-card reveal-stagger">
-          <h3>Jardinagem e Limpeza</h3>
-          <p>Mangueiras, vassouras, produtos de limpeza</p>
-        </div>
+
+        <article class="product-card reveal-stagger">
+          <div class="product-card__media">
+            <img src="https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=800&q=80&auto=format&fit=crop" alt="Ferramentas manuais e elétricas" loading="lazy" decoding="async">
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__eyebrow">01</span>
+            <h3 class="product-card__title"><span class="accent">Ferramentas</span></h3>
+            <p class="product-card__desc">Manuais e elétricas: marteletes, furadeiras, alicates e chaves para todo serviço.</p>
+          </div>
+        </article>
+
+        <article class="product-card reveal-stagger">
+          <div class="product-card__media">
+            <img src="https://images.unsplash.com/photo-1565608438257-fac3c27beb36?w=800&q=80&auto=format&fit=crop" alt="Material elétrico, fios e disjuntores" loading="lazy" decoding="async">
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__eyebrow">02</span>
+            <h3 class="product-card__title">Material <span class="accent">Elétrico</span></h3>
+            <p class="product-card__desc">Fios, disjuntores, tomadas e iluminação — tudo para uma instalação segura.</p>
+          </div>
+        </article>
+
+        <article class="product-card reveal-stagger">
+          <div class="product-card__media">
+            <img src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=800&q=80&auto=format&fit=crop" alt="Tubos e conexões hidráulicas" loading="lazy" decoding="async">
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__eyebrow">03</span>
+            <h3 class="product-card__title">Material <span class="accent">Hidráulico</span></h3>
+            <p class="product-card__desc">Tubos, conexões, registros e caixas d'água das melhores marcas.</p>
+          </div>
+        </article>
+
+        <article class="product-card reveal-stagger">
+          <div class="product-card__media">
+            <img src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=800&q=80&auto=format&fit=crop" alt="Latas de tinta e pincéis" loading="lazy" decoding="async">
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__eyebrow">04</span>
+            <h3 class="product-card__title">Tintas e <span class="accent">Revestimentos</span></h3>
+            <p class="product-card__desc">Tintas, vernizes, massas e solventes — para um acabamento à altura.</p>
+          </div>
+        </article>
+
+        <article class="product-card reveal-stagger">
+          <div class="product-card__media">
+            <img src="https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=800&q=80&auto=format&fit=crop" alt="Parafusos e ferragens" loading="lazy" decoding="async">
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__eyebrow">05</span>
+            <h3 class="product-card__title"><span class="accent">Ferragens</span></h3>
+            <p class="product-card__desc">Parafusos, dobradiças, fechaduras e pregos para fixar tudo no lugar.</p>
+          </div>
+        </article>
+
+        <article class="product-card reveal-stagger">
+          <div class="product-card__media">
+            <img src="https://images.unsplash.com/photo-1607400201515-c2c41c07d307?w=800&q=80&auto=format&fit=crop" alt="Sacos de cimento empilhados" loading="lazy" decoding="async">
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__eyebrow">06</span>
+            <h3 class="product-card__title">Cimento e <span class="accent">Argamassa</span></h3>
+            <p class="product-card__desc">Cimentos, argamassas e rejuntes — a base sólida da sua obra.</p>
+          </div>
+        </article>
+
+        <article class="product-card reveal-stagger">
+          <div class="product-card__media">
+            <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80&auto=format&fit=crop" alt="Jardinagem e produtos de limpeza" loading="lazy" decoding="async">
+          </div>
+          <div class="product-card__body">
+            <span class="product-card__eyebrow">07</span>
+            <h3 class="product-card__title">Jardinagem e <span class="accent">Limpeza</span></h3>
+            <p class="product-card__desc">Mangueiras, vassouras e produtos de limpeza para manter tudo em ordem.</p>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
@@ -108,11 +157,8 @@
   <!-- ========== DELIVERY SCENE (scroll-driven truck) ========== -->
   <section class="delivery-scene" id="entrega" aria-label="Entrega em Mongaguá">
     <div class="delivery-stage">
-      <div class="delivery-road" aria-hidden="true">
-        <div class="delivery-road-line"></div>
-      </div>
       <div class="delivery-truck" id="delivery-truck" aria-hidden="true">
-        <img src="assets/truck.svg" alt="" width="200" height="110" decoding="async">
+        <img src="assets/truck.png" alt="" decoding="async">
       </div>
       <h2 class="delivery-text">Entregamos em Mongaguá</h2>
       <a href="https://wa.me/5513997585780" target="_blank" rel="noopener" class="delivery-cta">Pedir orçamento no WhatsApp</a>
@@ -163,6 +209,19 @@
           <span class="stat-number">Amplo estoque</span>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ========== STOREFRONT ========== -->
+  <section class="section-storefront reveal" aria-label="Fachada da loja Lucimar">
+    <div class="container">
+      <figure class="storefront-figure">
+        <img src="assets/storefront.jpeg" alt="Fachada da loja Lucimar Materiais para Construção em Mongaguá" loading="lazy" decoding="async">
+        <figcaption class="storefront-caption">
+          <span class="storefront-eyebrow">Nossa Loja</span>
+          <span class="storefront-text">Av. Monteiro Lobato, 7944 — Balneário Itaóca, Mongaguá / SP</span>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
@@ -231,11 +290,6 @@
       <p>&copy; 2026 Lucimar França Comércio de Materiais para Construção Ltda. Todos os direitos reservados. &middot; Mongaguá, SP</p>
     </div>
   </footer>
-
-  <!-- ========== FLOATING WHATSAPP ========== -->
-  <a href="https://wa.me/5513997585780" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Fale conosco no WhatsApp" title="Fale conosco no WhatsApp">
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  </a>
 
   <!-- ========== CHATBOT PLACEHOLDER ========== -->
   <div id="chatbot-container"></div>

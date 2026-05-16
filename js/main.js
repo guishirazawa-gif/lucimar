@@ -26,8 +26,6 @@
   var loadingContainer = document.getElementById('scroll-loading');
   var loadingBar = document.getElementById('scroll-loading-bar');
   var heroHeadline = document.getElementById('hero-headline');
-  var deliveryScene = document.getElementById('entrega');
-  var truck = document.getElementById('delivery-truck');
 
   // ---- Config ----
   var frameCount = 192;
@@ -150,19 +148,6 @@
     }
   }
 
-  // ---- Delivery scene (truck slides left → right) ----
-  var truckInView = false;
-  function updateTruck() {
-    if (!deliveryScene || !truck || !truckInView) return;
-    var rect = deliveryScene.getBoundingClientRect();
-    var sceneScroll = deliveryScene.offsetHeight - window.innerHeight;
-    if (sceneScroll <= 0) return;
-    var p = Math.max(0, Math.min(1, -rect.top / sceneScroll));
-    // 0 → -30% (off-screen left), 1 → 130% (off-screen right)
-    var tx = -30 + p * 160;
-    truck.style.setProperty('--tx', tx.toFixed(2));
-  }
-
   // ---- Reveal on scroll ----
   function setupRevealObserver() {
     var revealElements = document.querySelectorAll('.reveal');
@@ -250,17 +235,6 @@
     });
   }
 
-  // ---- Intersection observers for scene scoping ----
-  function setupSceneObservers() {
-    if (!('IntersectionObserver' in window)) return;
-    if (deliveryScene) {
-      var obs = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { truckInView = e.isIntersecting; if (truckInView) updateTruck(); });
-      }, { rootMargin: '50% 0px' });
-      obs.observe(deliveryScene);
-    }
-  }
-
   // ---- rAF-throttled scroll handler ----
   var rafPending = false;
   function onScroll() {
@@ -268,7 +242,6 @@
     rafPending = true;
     requestAnimationFrame(function () {
       updateHero();
-      updateTruck();
       rafPending = false;
     });
   }
@@ -281,7 +254,6 @@
     resizeTimeout = setTimeout(function () {
       sizeCanvas();
       updateHero();
-      updateTruck();
     }, 150);
   });
 
@@ -289,7 +261,6 @@
   sizeCanvas();
   setupHeroWordStagger();
   setupRevealObserver();
-  setupSceneObservers();
   cloneMarquee();
 
   if (overlays.length) overlays[0].classList.add('active');

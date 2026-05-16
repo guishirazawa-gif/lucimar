@@ -41,6 +41,7 @@ a { color: inherit; text-decoration: none; }
 .section-products,
 .section-brands,
 .section-about,
+.section-storefront,
 .section-contact,
 .delivery-scene {
   content-visibility: auto;
@@ -51,6 +52,7 @@ a { color: inherit; text-decoration: none; }
 .section-products,
 .section-brands,
 .section-about,
+.section-storefront,
 .section-contact,
 .delivery-scene,
 .site-footer {
@@ -151,7 +153,7 @@ a { color: inherit; text-decoration: none; }
 #inicio { padding-top: 0; }
 
 #scroll-sequence {
-  height: 400vh;
+  height: 700vh;
   position: relative;
 }
 
@@ -215,19 +217,48 @@ a { color: inherit; text-decoration: none; }
   font-size: clamp(1.4rem, 4vw, 2rem);
   font-weight: 600;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.5s ease;
   pointer-events: none;
   padding: 0 24px;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 .scroll-overlay.active { opacity: 1; pointer-events: auto; }
 
-/* Overlay positions match data-at × scroll-sequence height (400vh).
-   data-at 0.85 ≈ 340vh, so we cover from ~270vh down to give it room to linger. */
+/* Liquid-glass wrapper for hero block */
+.overlay-glass {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 28px;
+  padding: clamp(28px, 4vw, 48px) clamp(24px, 4vw, 56px);
+  max-width: 760px;
+  box-shadow:
+    0 30px 80px -20px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Liquid-glass pill for single-line overlay text */
+.overlay-glass-text {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: clamp(14px, 2.2vw, 22px) clamp(24px, 3.5vw, 40px);
+  max-width: min(820px, 90vw);
+  line-height: 1.35;
+  box-shadow:
+    0 20px 60px -20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Overlay positions for 700vh scroll-sequence (600vh scrollable range).
+   Each overlay's top:Xvh places it where the user sees it during scroll. */
 .scroll-overlay[data-at="0.0"]  { top: 0;     height: 100vh; }
-.scroll-overlay[data-at="0.30"] { top: 100vh; height: 100vh; }
-.scroll-overlay[data-at="0.55"] { top: 200vh; height: 100vh; }
-.scroll-overlay[data-at="0.85"] { top: 270vh; height: 130vh; }
+.scroll-overlay[data-at="0.30"] { top: 180vh; height: 100vh; }
+.scroll-overlay[data-at="0.55"] { top: 330vh; height: 100vh; }
+.scroll-overlay[data-at="0.85"] { top: 510vh; height: 190vh; }
 
 .hero-headline {
   font-family: var(--font-heading);
@@ -254,8 +285,6 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 32px;
   opacity: 0.9;
 }
-
-.hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
 
 /* ============================
    BUTTONS
@@ -284,96 +313,139 @@ a { color: inherit; text-decoration: none; }
    ============================ */
 .section-products {
   background: var(--white);
-  padding: 80px 0;
+  padding: clamp(72px, 10vw, 128px) 0;
 }
 
-.section-title {
+.section-eyebrow {
   font-family: var(--font-heading);
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
   font-weight: 700;
-  color: var(--navy);
-  text-align: center;
-  margin-bottom: 48px;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8a8378;
+  margin-bottom: 16px;
 }
+.section-products .section-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(2rem, 4.2vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: #1c1a17;
+  text-align: left;
+  margin-bottom: 56px;
+  max-width: 38rem;
+}
+.section-products .section-title .accent { color: #8a8378; }
+.section-products .section-eyebrow { text-align: left; }
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(20px, 2.5vw, 32px);
 }
 
 .product-card {
-  background: var(--white);
-  border-left: 4px solid var(--navy);
-  padding: 24px 22px;
-  border-radius: 8px;
-  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  background: #F2EDE4;
+  border: 0;
+  border-radius: 32px;
+  padding: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 .product-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-  background: var(--cream);
+  background: #EBE4D6;
+  box-shadow: 0 30px 60px -25px rgba(31, 41, 55, 0.18);
 }
-.product-card h3 {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  color: var(--navy);
-  margin-bottom: 8px;
-}
-.product-card p { font-size: 0.9rem; color: #666; }
 
+.product-card__media {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: #e7dfd0;
+  margin-bottom: 24px;
+}
+.product-card__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.product-card:hover .product-card__media img { transform: scale(1.04); }
+
+.product-card__body {
+  padding: 4px 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.product-card__eyebrow {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8a8378;
+}
+.product-card__title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #1c1a17;
+  letter-spacing: -0.01em;
+}
+.product-card__title .accent { color: #8a8378; }
+.product-card__desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #5e574d;
+}
 /* ============================
-   DELIVERY SCENE (scroll-driven truck)
+   DELIVERY SCENE
    ============================ */
 .delivery-scene {
-  background: linear-gradient(180deg, #f8f4ec 0%, var(--cream) 100%);
-  height: 220vh;
+  background: var(--white);
+  padding: clamp(72px, 9vw, 120px) 0 clamp(56px, 7vw, 96px);
   position: relative;
-  contain: layout paint;
+  overflow: hidden;
 }
 
 .delivery-stage {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  position: relative;
+  height: clamp(420px, 60vh, 580px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
   padding: 0 16px;
-}
-
-.delivery-road {
-  position: absolute;
-  left: 0; right: 0;
-  top: 50%;
-  height: 2px;
-  background: rgba(27, 58, 107, 0.18);
-  transform: translateY(64px);
-}
-.delivery-road-line {
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    to right,
-    rgba(27, 58, 107, 0.35) 0 24px,
-    transparent 24px 48px
-  );
-  height: 2px;
 }
 
 .delivery-truck {
   position: absolute;
   left: 0;
   top: 50%;
-  width: clamp(140px, 22vw, 240px);
+  width: clamp(180px, 26vw, 320px);
   height: auto;
-  /* translateX driven from JS via --tx (0 → 100). translateY centers on the road. */
-  transform: translate3d(calc(var(--tx, 0) * 1% - 30%), -50%, 0);
+  transform: translate3d(-30vw, -50%, 0);
   will-change: transform;
+  animation: truckLoop 9s linear infinite;
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.18));
 }
 .delivery-truck img { width: 100%; height: auto; display: block; }
+
+@keyframes truckLoop {
+  0%   { transform: translate3d(-30vw, -50%, 0); }
+  100% { transform: translate3d(130vw, -50%, 0); }
+}
 
 .delivery-text {
   font-family: var(--font-heading);
@@ -381,8 +453,10 @@ a { color: inherit; text-decoration: none; }
   font-weight: 800;
   color: var(--navy);
   text-align: center;
-  margin-top: 140px;
+  margin-top: 180px;
   letter-spacing: -0.5px;
+  position: relative;
+  z-index: 2;
 }
 
 .delivery-cta {
@@ -397,6 +471,8 @@ a { color: inherit; text-decoration: none; }
   font-weight: 700;
   font-size: 0.95rem;
   transition: transform 0.15s, box-shadow 0.2s;
+  position: relative;
+  z-index: 2;
 }
 .delivery-cta:hover {
   transform: translateY(-2px);
@@ -458,7 +534,7 @@ a { color: inherit; text-decoration: none; }
    ABOUT
    ============================ */
 .section-about {
-  background: var(--cream);
+  background: var(--white);
   padding: 80px 0;
 }
 .about-grid {
@@ -471,11 +547,17 @@ a { color: inherit; text-decoration: none; }
 .about-text p { margin-bottom: 16px; font-size: 1.05rem; line-height: 1.8; }
 .about-stats { display: flex; flex-direction: column; gap: 16px; }
 .stat-card {
-  background: var(--navy);
-  color: var(--cream);
-  padding: 22px 28px;
-  border-radius: 12px;
+  background: rgba(27, 58, 107, 0.10);
+  backdrop-filter: blur(22px) saturate(1.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  border: 1px solid rgba(27, 58, 107, 0.18);
+  color: var(--navy);
+  padding: 26px 30px;
+  border-radius: 20px;
   text-align: center;
+  box-shadow:
+    0 20px 50px -25px rgba(27, 58, 107, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 .stat-number {
   display: block;
@@ -483,14 +565,73 @@ a { color: inherit; text-decoration: none; }
   font-size: 1.6rem;
   font-weight: 700;
   margin-bottom: 4px;
+  color: var(--navy);
 }
-.stat-label { font-size: 0.9rem; opacity: 0.85; }
+.stat-label { font-size: 0.9rem; opacity: 0.75; color: var(--navy); }
+
+/* ============================
+   STOREFRONT
+   ============================ */
+.section-storefront {
+  background: var(--white);
+  padding: clamp(40px, 6vw, 80px) 0;
+}
+.storefront-figure {
+  position: relative;
+  margin: 0;
+  border-radius: 28px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 30px 80px -30px rgba(27, 58, 107, 0.35);
+}
+.storefront-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.storefront-figure:hover img { transform: scale(1.02); }
+.storefront-caption {
+  position: absolute;
+  left: clamp(20px, 3vw, 40px);
+  bottom: clamp(20px, 3vw, 40px);
+  right: clamp(20px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 22px;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(22px) saturate(1.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 18px;
+  color: var(--white);
+  box-shadow:
+    0 20px 60px -20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  max-width: 540px;
+}
+.storefront-eyebrow {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+.storefront-text {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.4;
+}
 
 /* ============================
    CONTACT
    ============================ */
 .section-contact {
-  background: var(--cream);
+  background: var(--white);
   padding: 80px 0;
 }
 .contact-grid {
@@ -538,41 +679,6 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============================
-   FLOATING WHATSAPP BUTTON
-   ============================ */
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--whatsapp);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 16px rgba(37,211,102,0.4);
-  transition: transform 0.2s;
-}
-.whatsapp-float:hover { transform: scale(1.08); }
-.whatsapp-float::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: var(--whatsapp);
-  opacity: 0.4;
-  animation: whatsappPulse 2s ease-in-out infinite;
-  z-index: -1;
-}
-@keyframes whatsappPulse {
-  0%   { transform: scale(1);    opacity: 0.4; }
-  70%  { transform: scale(1.35); opacity: 0; }
-  100% { transform: scale(1.35); opacity: 0; }
-}
-
-/* ============================
    REVEAL ANIMATIONS
    ============================ */
 .reveal {
@@ -601,7 +707,10 @@ a { color: inherit; text-decoration: none; }
   .site-header { transform: none; animation: none; }
   .hero-headline .word { opacity: 1; transform: none; animation: none; }
   .marquee-track { animation: none; }
-  .delivery-truck { transform: translate3d(35%, -50%, 0) !important; }
+  .delivery-truck {
+    animation: none;
+    transform: translate3d(35vw, -50%, 0) !important;
+  }
 }
 
 /* ============================
@@ -636,38 +745,50 @@ a { color: inherit; text-decoration: none; }
   .btn-whatsapp-label { display: none; } /* icon-only on small screens */
   .hamburger { display: flex; }
 
-  .section-products, .section-brands, .section-about, .section-contact { padding: 60px 0; }
+  .section-products, .section-brands, .section-about, .section-storefront, .section-contact { padding: 60px 0; }
   .section-title { margin-bottom: 32px; }
 
   .footer-grid { grid-template-columns: 1fr; gap: 28px; padding-bottom: 28px; }
-  .hero-ctas { flex-direction: column; align-items: center; width: 100%; }
-  .hero-ctas .btn { width: 80%; max-width: 320px; justify-content: center; }
 
-  .delivery-scene { height: 180vh; }
-  .delivery-text { margin-top: 110px; }
+  .delivery-scene { padding: 60px 0 48px; }
+  .delivery-stage { height: clamp(360px, 56vh, 480px); }
+  .delivery-text { margin-top: 120px; }
   .delivery-cta { padding: 11px 20px; font-size: 0.9rem; }
 
   .marquee-track { gap: 32px; }
   .brand-logo { height: 48px; }
   .brand-logo img { max-width: 140px; }
 
-  .whatsapp-float { width: 52px; height: 52px; bottom: 16px; right: 16px; }
+  /* Storefront on tablet/mobile — taller crop reads better */
+  .storefront-figure { aspect-ratio: 4 / 5; border-radius: 22px; }
+  .storefront-caption {
+    left: 14px; right: 14px; bottom: 14px;
+    padding: 14px 16px;
+    border-radius: 14px;
+  }
+  .storefront-text { font-size: 0.95rem; }
 
   /* Disable content-visibility on mobile — interferes with anchor scroll positioning */
-  .section-products, .section-brands, .section-about, .section-contact, .delivery-scene {
+  .section-products, .section-brands, .section-about, .section-storefront, .section-contact, .delivery-scene {
     content-visibility: visible;
   }
 }
 
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
-  .products-grid { grid-template-columns: 1fr; }
-  .product-card { padding: 20px 18px; }
+  .products-grid { grid-template-columns: 1fr; gap: 18px; }
+  .product-card { padding: 16px; border-radius: 28px; }
+  .product-card__media { border-radius: 18px; aspect-ratio: 5 / 4; margin-bottom: 18px; }
+  .product-card__body { padding: 2px 8px 12px; }
+  .product-card__title { font-size: 1.3rem; }
   .about-text p { font-size: 1rem; line-height: 1.7; }
   .stat-card { padding: 18px 22px; }
   .stat-number { font-size: 1.4rem; }
-  .delivery-text { margin-top: 96px; }
+  .delivery-text { margin-top: 104px; }
   .marquee-track { gap: 24px; }
   .brand-logo { height: 40px; }
   .brand-logo img { max-width: 120px; }
+
+  .storefront-eyebrow { font-size: 0.7rem; letter-spacing: 0.18em; }
+  .storefront-text { font-size: 0.9rem; }
 }
